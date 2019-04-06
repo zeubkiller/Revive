@@ -1,6 +1,9 @@
 private _inCam = missionNamespace getvariable["ATHSC_Run",false];
 if(_inCam) then {
 	missionNamespace setvariable["ATHSC_Run",false];
+	if(visibleMap) then {
+		openMap [false,false];
+	};
 	"HSC" cutFadeOut 0;
 	("HSC" call BIS_fnc_rscLayer) cutText ["","PLAIN"]; //remove
 	[] spawn {
