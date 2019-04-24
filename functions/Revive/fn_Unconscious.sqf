@@ -1,7 +1,7 @@
 params["_unit", "_killer"];
 _unit setVariable ["AT_Revive_isUnconscious", true, true];
 
-if(side _unit == side _killer) then {
+if((side _unit == side _killer) && (_unit != _killer)) then {
 	private _msg = format["%1 was shot by %2.",name _unit, name _killer];
 	_msg remoteExec ["systemchat", 0, false];
 } else {
