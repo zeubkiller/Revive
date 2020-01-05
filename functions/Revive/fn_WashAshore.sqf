@@ -1,7 +1,7 @@
-private["_unit","_center","_pos","_distance","_vec","_found","_npos"];
+private["_center","_pos","_distance","_vec","_found","_npos"];
 params["_unit"];
 
-_center = (position SouthWest) vectorAdd ((position NorthEast) vectordiff (position SouthWest));
+_center = (position SouthWest) vectorAdd ((position NorthEast) vectordiff (position SouthWest) vectorMultiply 0.5);
 _pos = getpos _unit;
 _distance = _unit distance _center;
 _vec = [((_center select 0)-(_pos select 0))/_distance,((_center select 1)-(_pos select 1))/_distance];
