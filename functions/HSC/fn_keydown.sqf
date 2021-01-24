@@ -74,9 +74,8 @@ if(_dikCode in (actionKeys "showMap") || _dikCode in (actionKeys "hideMap")) the
 	if(visibleMap) then {
 		openMap [false, false];
 	} else {
-		openMap [true, false];
+		openMap [true, true];
 	};
-	//_handled = false;
 };
 if(_dikCode == DIK_RETURN) then {
 	_handled = false;

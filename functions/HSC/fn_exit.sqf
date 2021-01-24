@@ -1,8 +1,6 @@
 private _inCam = missionNamespace getvariable["ATHSC_Run",false];
 if(_inCam) then {
-	if(visibleMap) then {
-		openMap [false,false];
-	};
+	openMap [false,false];
 	missionNamespace setvariable["ATHSC_Run",false];
 	
 	"HSC" cutFadeOut 0;
