@@ -51,18 +51,26 @@ if(!isnull _target) then {
 		};
 		
 		private _attendant = [(configfile >> "CfgVehicles" >> typeof player),"attendant",0] call BIS_fnc_returnConfigEntry; 
-		if(_attendant == 1 && ("Medikit" in items player)) then {
+		private _medkits = missionNamespace getvariable ["a3e_arr_medkits",["Medikit"]];
+		private _faks = missionNamespace getvariable ["a3e_arr_faks",["FirstAidKit"]];
+		if(_attendant == 1 && (items player findIf {_x in _medkits} > -1)) then {
 			_target setDamage 0;
 		} else {
 			if(_fakUsed) then {
-				if("FirstAidKit" in items player) then {
-					_target setDamage 0;
-					player removeItem "FirstAidKit";
+				private _items = items player;
+				private _itemIndex = _items findIf {_x in _faks};
+				if(_itemIndex > -1) then {
+					player removeitem (_items select _itemIndex);
+					_target setdamage 0;
 				} else {
-					if("FirstAidKit" in items _target) then {
-						_target setDamage 0;
-						_target removeItem "FirstAidKit";
+					//No FAK in player inventory Check the other guy
+					_items = items _target;
+					_itemIndex = _items findIf {_x in _faks};
+					if(_itemIndex > -1) then {
+						_target removeitem (_items select _itemIndex);
+						_target setdamage 0;
 					} else {
+						//Nobody has a FAK? What is going on?!?
 						_target setDamage (random 0.3)+0.1;
 					};
 				};
