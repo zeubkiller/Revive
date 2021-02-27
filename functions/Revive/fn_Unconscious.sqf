@@ -1,12 +1,29 @@
 params["_unit", "_killer"];
 _unit setVariable ["AT_Revive_isUnconscious", true, true];
 
+private _vip_player = profileNamespace getVariable ["A3E_VIPPlayer",nil];
+
 if((side _unit == side _killer) && (_unit != _killer)) then {
-	private _msg = format["%1 was shot by %2.",name _unit, name _killer];
-	_msg remoteExec ["systemchat", 0, false];
+	if(_unit == _vip_player) then {		
+		private _msg = format["%1 the VIP was killed by %2!",name _unit, name _killer];
+		_msg remoteExec ["systemchat", 0, false];
+		(_killer) addScore -10;
+	} else {
+		private _msg = format["%1 was shot by %2.",name _unit, name _killer];
+		_msg remoteExec ["systemchat", 0, false];
+	};
 } else {
-	private _msg = format["%1 is unconscious.",name _unit];
-	_msg remoteExec ["systemchat", 0, false];
+	if(_unit == _vip_player) then {		
+		private _msg = format["%1 the VIP is unconscious!",name _unit];
+		_msg remoteExec ["systemchat", 0, false];
+		(_unit) addScore -4;
+		{
+			(_x) addScore -1;
+		} foreach (call A3E_fnc_GetPlayers);
+	} else {
+		private _msg = format["%1 is unconscious.",name _unit];
+		_msg remoteExec ["systemchat", 0, false];
+	};
 };
 private _inVehicle = false;
 if(vehicle _unit == _unit) then {
